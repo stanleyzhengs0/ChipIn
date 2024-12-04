@@ -1,14 +1,12 @@
 'use client'
-import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const GoogleSignIn = () => {
-    const handleOnClick = () =>{
-        signIn("google")
-    }
+    const router = useRouter()
   return (
     <div>
         <button
-            onClick={handleOnClick}
+            onClick={()=>{router.push('./auth/sign-in ')}}
             className = 'bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600'
         >
             Sign in with google
