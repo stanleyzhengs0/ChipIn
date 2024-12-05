@@ -18,6 +18,7 @@ export default function Home() {
           </button>
         </>
       ) : (
+
         <div className= "flex bg-cover bg-center min-h-screen bg-[url('https://static.vecteezy.com/system/resources/previews/007/069/878/large_2x/top-view-of-group-of-multiethnic-busy-people-working-in-an-office-aerial-view-with-businessman-and-businesswoman-sitting-around-a-conference-table-with-copy-space-business-meeting-concept-photo.jpg')]">
           {/* Left Empty */}
           <div className = "w-1/2"></div>
