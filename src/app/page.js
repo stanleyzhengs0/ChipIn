@@ -9,20 +9,7 @@ export default function Home() {
 
   return (
     <>
-<<<<<<< HEAD
-      {session ? (
-        <>
-          <div>Welcome back {session.user.name}</div>
-          <button
-            onClick={() => {signOut()}}
-          >sign out
-          </button>
-        </>
-      ) : (
-
-=======
  
->>>>>>> 06e5f9abea4160752c2b31ebcf1fb28d4349304d
         <div className= "flex bg-cover bg-center min-h-screen bg-[url('https://static.vecteezy.com/system/resources/previews/007/069/878/large_2x/top-view-of-group-of-multiethnic-busy-people-working-in-an-office-aerial-view-with-businessman-and-businesswoman-sitting-around-a-conference-table-with-copy-space-business-meeting-concept-photo.jpg')]">
           {/* Left Empty */}
           <div className = "w-1/2"></div>
