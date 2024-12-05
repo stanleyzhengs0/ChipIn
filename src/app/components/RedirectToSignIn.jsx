@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from "next/navigation"
 
-const GoogleSignIn = () => {
+const RedirectToSignIn = () => {
     const router = useRouter()
   return (
     <div>
@@ -16,4 +16,4 @@ const GoogleSignIn = () => {
   )
 }
 
-export default GoogleSignIn
+export default RedirectToSignIn

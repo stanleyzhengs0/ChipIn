@@ -1,16 +1,17 @@
-import { redirect } from "next/navigation";
-import { SignInPage } from "           /auth/sign-in/signin"
+import { SignInPage } from "../../auth/sign-in/signin"
+import { checkIsAuthenticated } from "../../lib/auth/checkIsAuthenticated"
+import { redirect } from 'next/navigation'
 
 const SignIn = async () => {
-    // const isAuthenticated = await checkIsAuthenticated()
-    const isAuthenticated = false;
 
+    const isAuthenticated = await checkIsAuthenticated()
+    
     if(isAuthenticated){
-        redirect("/dashboard")
+        redirect("../../../analytic-dashboard")
     }else{
         return <SignInPage/>
     }
-  
 }
 
 export default SignIn;
+
