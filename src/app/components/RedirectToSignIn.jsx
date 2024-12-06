@@ -7,9 +7,9 @@ const RedirectToSignIn = () => {
     <div>
         <button
             onClick={()=>{router.push('./auth/sign-in ')}}
-            className = 'bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600'
+            className="all-[unset] box-border inline-flex h-[60px] items-center justify-center gap-2.5 px-10 py-4 relative flex-[0_0_auto] bg-[#c35439] rounded-lg"
         >
-            Sign in with google
+            Log In
         </button>
       
     </div>

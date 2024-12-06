@@ -1,4 +1,5 @@
 import React from "react";
+import RedirectToSignIn from "./components/RedirectToSignIn";
 
 export const Desktop = () => {
   return (
@@ -269,11 +270,8 @@ export const Desktop = () => {
           </div>
 
           <div className="inline-flex items-start justify-end gap-6 absolute top-0 left-[841px]">
-            <button className="all-[unset] box-border inline-flex h-[60px] items-center justify-center gap-2.5 px-10 py-4 relative flex-[0_0_auto] bg-[#c35439] rounded-lg">
-              <div className="relative w-fit font-paragraph-p2-medium font-[number:var(--paragraph-p2-medium-font-weight)] text-white text-[length:var(--paragraph-p2-medium-font-size)] tracking-[var(--paragraph-p2-medium-letter-spacing)] leading-[var(--paragraph-p2-medium-line-height)] whitespace-nowrap [font-style:var(--paragraph-p2-medium-font-style)]">
-                Login
-              </div>
-            </button>
+          
+            <RedirectToSignIn/>
 
             <div className="inline-flex h-[60px] relative flex-[0_0_auto] items-center justify-center gap-2.5 px-6 py-4 bg-[#bc4123] rounded-lg">
               <div className="relative w-fit font-paragraph-p2-medium font-[number:var(--paragraph-p2-medium-font-weight)] text-white text-[length:var(--paragraph-p2-medium-font-size)] tracking-[var(--paragraph-p2-medium-letter-spacing)] leading-[var(--paragraph-p2-medium-line-height)] whitespace-nowrap [font-style:var(--paragraph-p2-medium-font-style)]">

@@ -43,9 +43,11 @@ export const {handlers, auth} = NextAuth({
      * @returns {object} Updated token with the user's ID if available
      */
     async jwt({token, user}){
+      // console.log("jwt TOKEN", {token, user})
       if(user){
         return {...token, id: user.id}
       }
+      
       return token
     },
 
@@ -62,6 +64,7 @@ export const {handlers, auth} = NextAuth({
         user: {
           ...session.user, 
           id: token.id,
+
         }
       }
     }
