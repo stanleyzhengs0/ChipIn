@@ -1,6 +1,8 @@
-import { access } from 'fs';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
+import PostgresAdapter from "@auth/pg-adapter"
+// import { pool } from "../../lib/postgres"
+
 
 /**
  * Auth Configuration using NextAuth/Authjs V5
@@ -8,7 +10,6 @@ import Google from 'next-auth/providers/google';
 export const {handlers, auth} = NextAuth({
   // Uses NEXT_AUTH_URL in .env file 
   trustHost: true, 
-  // Autofill and populate DB, written by Next
   // adapter: PostgresAdapter(pool),
   // Secret key used to encrypt JWT's
   secret: process.env.NEXTAUTH_SECRET,
@@ -29,10 +30,7 @@ export const {handlers, auth} = NextAuth({
       authorization: {
         // Requesting sepcific scopes for Google API's
         params:{
-          prompt: "consent",
-          access_type: "offline",
           response_type: "code",
-          scope: 'https://www.googleapis.com/auth/drive.activity.readonly',
         },
       },
     })
@@ -46,11 +44,14 @@ export const {handlers, auth} = NextAuth({
      * @param {object} user - The authenticated users information
      * @returns {object} Updated token with the user's ID if available
      */
-    async jwt({token, user, account}){
+    async jwt({token, user, account, profile}){
+
+      console.log("Account:", account);
+      console.log("Profile:", profile);
       
       console.log("jwt TOKEN", {token})
       if(user){
-        return {...token, id: user.id, accessToken: account.accessToken}
+        return {...token, id: user.id}
       }
       
       return token
@@ -65,7 +66,6 @@ export const {handlers, auth} = NextAuth({
     async session({session, token}){
       // console.log("session callback authconfig", {session, token})
       return {
-        accessToken: token.accessToken,
         ...session, 
         user: {
           ...session.user, 
