@@ -1,3 +1,4 @@
+import { access } from 'fs';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 
@@ -25,12 +26,15 @@ export const {handlers, auth} = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // authorization: {
-      //   // Requesting sepcific scopes for Google API's
-      //   params:{
-      //     scope: 'https://www.googleapis.com/auth/drive.activity.readonly',
-      //   },
-      // },
+      authorization: {
+        // Requesting sepcific scopes for Google API's
+        params:{
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+          scope: 'https://www.googleapis.com/auth/drive.activity.readonly',
+        },
+      },
     })
   ],
   
@@ -42,10 +46,11 @@ export const {handlers, auth} = NextAuth({
      * @param {object} user - The authenticated users information
      * @returns {object} Updated token with the user's ID if available
      */
-    async jwt({token, user}){
-      // console.log("jwt TOKEN", {token, user})
+    async jwt({token, user, account}){
+      
+      console.log("jwt TOKEN", {token})
       if(user){
-        return {...token, id: user.id}
+        return {...token, id: user.id, accessToken: account.accessToken}
       }
       
       return token
@@ -58,8 +63,9 @@ export const {handlers, auth} = NextAuth({
      * @returns Updated Sessions object with the users ID included
      */
     async session({session, token}){
-      console.log("session callback authconfig", {session, token})
+      // console.log("session callback authconfig", {session, token})
       return {
+        accessToken: token.accessToken,
         ...session, 
         user: {
           ...session.user, 
@@ -71,18 +77,3 @@ export const {handlers, auth} = NextAuth({
   }
 
 })
-
-// export const authConfigs = {
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//       authorization: {
-//         params: {
-//           scope: 'https://www.googleapis.com/auth/drive.activity.readonly',
-//         },
-//       },
-//     }),
-//   ],
-//   callbacks: {}
-// };
