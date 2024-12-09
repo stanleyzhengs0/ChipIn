@@ -1,42 +1,39 @@
 import { NextResponse } from "next/server";
 import { auth } from "../../lib/auth/authConfig"
-import { google } from "googleapis";
-
-
 
 export async function GET(req) {
     try {
         const session = await auth()
 
-        
-
         if (!session) {
             return NextResponse.json({ error: "Unauthorized, no access token found" }, { status: 401 });
         }
  
-        // Set up OAuth2 client with the user's access token
-        const oauth2Client = new google.auth.OAuth2(session);
+        const response = await fetch("https://driveactivity.googleapis.com/v2/activity:query", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${session.accessToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              itemName: `items/1FVKqhbDhYWKkTUkVjd7_MXUymKh3mGS7zf54_C2IWns`,
+            }),
+          }).then((res) => res.json());
+          
 
-        oauth2Client.setCredentials({
-            access_token: session,  // Use the access token you received after OAuth
-            refresh_token: session,  // Optional, use to refresh tokens when expired
-          });
-       
-        const drive = google.drive({version: 'v3', auth: oauth2Client});
-
-        const response = await drive.files.get({
-            fileId: '11Sl4uMRcKUnx649iVjsUYgDP0zkdJGVrNJXD3VVRgZ8',
-            
-        })
-
-
-      
+        //TESTING DRIVE CONNECTION WITH SAMPLE TASK
+        // const response =  driveactivity.activity.query({
+        //     'itemsNames' : ["items/1FVKqhbDhYWKkTUkVjd7_MXUymKh3mGS7zf54_C2IWns"]
+        // }).catch((error) => {
+        //     console.error("Error fetching Drive Activity:", error);
+        //     return NextResponse.json({ error: error.message }, { status: 500 });
+        // });
 
         // Return the API response
-        return NextResponse.json({ response: res });
+        return NextResponse.json({ response: response });
 
     } catch (error) {
-        console.error("Error fetching Drive Activity:", error);
+        console.error("Error fetching Drive:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

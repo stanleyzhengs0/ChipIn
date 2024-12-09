@@ -17,7 +17,7 @@ export const {handlers, auth} = NextAuth({
     // uses JWT tokens to manage sessions
     strategy: "jwt",
     // Maximum session age set to 30 days (default val set by next)
-    maxAge: 30 * 24 * 60 * 60
+    maxAge: 30 * 24 * 60 * 60,
   },
   pages:{
     signIn: "/auth/sign-in" //Redirects to a custom sign in page
@@ -30,10 +30,14 @@ export const {handlers, auth} = NextAuth({
       authorization: {
         // Requesting sepcific scopes for Google API's
         params:{
-          response_type: "code",
+          // response_type: "code",
+          scope: 'openid https://www.googleapis.com/auth/drive.activity email profile',
+          access_type: "offline",
+          prompt: "consent"
+          
         },
       },
-    })
+    }),
   ],
   
   // Callback functions to handle token and session modification
@@ -46,14 +50,18 @@ export const {handlers, auth} = NextAuth({
      */
     async jwt({token, user, account, profile}){
 
-      console.log("Account:", account);
-      console.log("Profile:", profile);
-      
-      console.log("jwt TOKEN", {token})
-      if(user){
-        return {...token, id: user.id}
+      if (account){
+        token.accessToken = account.access_token,
+        token.refreshToken = account.refresh_token 
+        token.idToken = account.id_token || null; // Handle missing id_token
+        token.provider = account.provider
       }
       
+      if (profile){
+        token.profile = profile
+      }
+
+
       return token
     },
 
@@ -64,14 +72,15 @@ export const {handlers, auth} = NextAuth({
      * @returns Updated Sessions object with the users ID included
      */
     async session({session, token}){
-      // console.log("session callback authconfig", {session, token})
+      console.log("session callback authconfig", {session, token})
       return {
         ...session, 
         user: {
           ...session.user, 
           id: token.id,
-
-        }
+        },
+        accessToken: token.accessToken,
+        refreshToken: token.refreshToken
       }
     }
   }
