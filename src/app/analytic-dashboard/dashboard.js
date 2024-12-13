@@ -1,8 +1,24 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import SignOutButton from "../components/SignOutButton"
 
 
 const DashboardPage = () => {
+
+  const fetchDocumentData = async () =>{
+    console.log('fetching data')
+    // try{
+    //   let response = await fetch('./api/driveactivity')
+    // }catch(error){
+    //   console.log(error)
+    // }
+  }
+
+  useEffect(()=>{
+
+    fetchDocumentData()
+  },[])
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* <!-- Page content goes here --> */}

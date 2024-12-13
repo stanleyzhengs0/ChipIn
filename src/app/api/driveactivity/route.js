@@ -16,9 +16,17 @@ export async function GET(req) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              itemName: `items/1FVKqhbDhYWKkTUkVjd7_MXUymKh3mGS7zf54_C2IWns`,
+              itemName: `items/1UnFB5TQ15G4Z5yj6Yhz83MTXQ9tHqFy0zuOK8GDNogM`,
             }),
           }).then((res) => res.json());
+
+
+        const r = await fetch("https://people.googleapis.com/v1/people/108657382841632670101?personFields=names,emailAddresses",{
+          method: "GET",
+          headers:{
+            "Authorization": `Bearer ${session.accessToken}`,
+          }
+        })
           
 
         //TESTING DRIVE CONNECTION WITH SAMPLE TASK

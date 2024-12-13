@@ -31,7 +31,7 @@ export const {handlers, auth} = NextAuth({
         // Requesting sepcific scopes for Google API's
         params:{
           // response_type: "code",
-          scope: 'openid https://www.googleapis.com/auth/drive.activity email profile',
+          scope: 'openid https://www.googleapis.com/auth/drive.activity https://www.googleapis.com/auth/drive email profile',
           access_type: "offline",
           prompt: "consent"
           
