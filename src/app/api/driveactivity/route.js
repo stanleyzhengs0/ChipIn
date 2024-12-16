@@ -3,6 +3,9 @@ import { auth } from "../../lib/auth/authConfig"
 
 export async function GET(req) {
     try {
+        const { searchParams } = new URL(req.url);
+        // console.log(searchParams.get("query"))
+        //TESTING DRIVE CONNECTION WITH SAMPLE TASK 
         const session = await auth()
 
         if (!session) {
@@ -16,7 +19,7 @@ export async function GET(req) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              itemName: `items/1UnFB5TQ15G4Z5yj6Yhz83MTXQ9tHqFy0zuOK8GDNogM`,
+              itemName: `items/${searchParams.get("query")}`,
             }),
           }).then((res) => res.json());
 

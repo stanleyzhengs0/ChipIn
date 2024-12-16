@@ -1,23 +1,22 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SignOutButton from "../components/SignOutButton"
 
 
 const DashboardPage = () => {
 
+  const [documentID, setDocumentID] = useState('');
+
+
   const fetchDocumentData = async () =>{
-    console.log('fetching data')
-    // try{
-    //   let response = await fetch('./api/driveactivity')
-    // }catch(error){
-    //   console.log(error)
-    // }
+    try{
+      let response = await fetch(`./api/driveactivity?query=${documentID}`)
+      console.log(response.body)
+    }catch(error){
+      console.log(error)
+    }
   }
 
-  useEffect(()=>{
-
-    fetchDocumentData()
-  },[])
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -37,8 +36,13 @@ const DashboardPage = () => {
             type="text"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search..."
+            onChange={(event)=> setDocumentID(event.target.value)}
           />
-          <button className="p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none">
+          <button 
+            className="p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none"
+            onClick={fetchDocumentData}
+          >
+          
             Search
           </button>
         </div>
