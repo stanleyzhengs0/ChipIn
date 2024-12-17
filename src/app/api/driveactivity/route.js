@@ -19,7 +19,10 @@ export async function GET(req) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              itemName: `items/${searchParams.get("query")}`,
+              // itemName: `items/${searchParams.get("query")}`,
+              itemName: `items/1tAM7gWepNLzG9miXGOyOK4UiKMrZyNu56vDkTrB6TJw`
+
+              
             }),
           }).then((res) => res.json());
 

@@ -6,11 +6,13 @@ import SignOutButton from "../components/SignOutButton"
 const DashboardPage = () => {
 
   const [documentID, setDocumentID] = useState('');
+  const [documentData, setDocumentData] = useState([])
 
 
   const fetchDocumentData = async () =>{
     try{
       let response = await fetch(`./api/driveactivity?query=${documentID}`)
+      setDocumentData(response)
       console.log(response.body)
     }catch(error){
       console.log(error)
@@ -25,6 +27,7 @@ const DashboardPage = () => {
         <div className='py-10'>
           <SignOutButton />
         </div>
+
         
         
       </div>
